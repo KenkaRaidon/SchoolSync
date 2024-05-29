@@ -1,9 +1,10 @@
 'use client'
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 const Page = () => {
+  const router = useRouter();
   const { data: session, status } = useSession();
   let roomIdInput = ''
 
