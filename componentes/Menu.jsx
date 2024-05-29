@@ -3,40 +3,32 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { FaHouse } from "react-icons/fa6";
 
 const Menu = () => {
   const { data: session } = useSession();
-  console.log(session);
-
   return (
-    <nav className="flex justify-between items-center bg-gray-950 text-white px-24 py-3">
-      <h1 className="text-xl font-bold">NextAuth</h1>
-
-      <ul className="flex gap-x-2">
-        {!session?.user ? (
-          <>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/auth/login">Login</Link>
-            </li>
-            <li>
-              <Link href="/auth/register">Register</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <button onClick={(e) => {
-                e.preventDefault();
-                signOut()
-              }} >Logout</button>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="/" className="btn navbtn" onClick={() => localStorage.removeItem("sistema")}>
+                <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Inicio</span>
+              </Nav.Link>
+              {session?.user && (
+                <>
+                  <Nav.Link href="/" className="btn navbtn" onClick={() => localStorage.removeItem("sistema")}>
+                    <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>COLA</span>
+                  </Nav.Link>
+                </>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 }
 

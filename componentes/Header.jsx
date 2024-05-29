@@ -5,6 +5,7 @@ import { FaRegMoon, FaSun, FaUserLarge } from 'react-icons/fa6'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Menu from './Menu';
 
 const Header = () => {
     const { data: session } = useSession();
@@ -51,7 +52,9 @@ const Header = () => {
                         <Link className="btn green-btn" href="/auth/login">Sign In</Link>
                     )}
                 </div>
+                
             </div>
+            <Menu></Menu>
         </>
     );
 };

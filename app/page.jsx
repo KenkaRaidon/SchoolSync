@@ -1,31 +1,37 @@
 'use client'
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation'
+import { LoadingContext } from '@/context/LoadingProvider';
 
 const Page = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const { setIsLoading } = useContext(LoadingContext);
   let roomIdInput = ''
-
   useEffect(() => {
-    console.log(status)
+    setIsLoading(true)
     if (!["loading", "authenticated"].includes(status)) {
-        redirect('/auth/login');
+      setIsLoading(false)
+      redirect('/auth/login');
     }
     if (status === "authenticated") {
-
+      setIsLoading(false)
     }
-}, [status]);
+  }, [status]);
 
   const createRoom = async () => {
+    setIsLoading(true)
     const res = await fetch('/api/rooms/create')
     const roomId = await res.text()
     router.push(`/room/${roomId}`)
+    setIsLoading(false)
   }
 
   const joinRoom = async (roomId) => {
+    setIsLoading(true)
     router.push(`/room/${roomId}`)
+    setIsLoading(false)
   }
 
   return (
