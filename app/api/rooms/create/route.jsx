@@ -1,11 +1,27 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET() {
-  const createdRoom = await prisma.chatRoom.create({
-    data: {},
-  })
+const handler = async (req) => {
+  try {
+    const body = await req.json();
+    const { roomName } = body;
 
-  return new Response(createdRoom.id)
-}
+    const createdRoom = await prisma.chatRoom.create({
+      data: { roomName },
+    });
+
+    console.log(createdRoom);
+
+    return NextResponse.json(createdRoom);
+  } catch (error) {
+    if (error.code === 'P2002' && error.meta && error.meta.target.includes('roomName')) {
+      return NextResponse.json({ error: 'Room name already exists' }, { status: 409 });
+    }
+    console.error('Error creating room:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+};
+
+export { handler as POST };

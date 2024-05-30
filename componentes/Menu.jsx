@@ -14,13 +14,13 @@ const Menu = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/" className="btn navbtn" onClick={() => localStorage.removeItem("sistema")}>
+              <Nav.Link href="/" className="btn navbtn">
                 <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Inicio</span>
               </Nav.Link>
               {session?.user && (
                 <>
-                  <Nav.Link href="/" className="btn navbtn" onClick={() => localStorage.removeItem("sistema")}>
-                    <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>COLA</span>
+                  <Nav.Link href="/roles" className="btn navbtn">
+                    <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Crear rol</span>
                   </Nav.Link>
                 </>
               )}

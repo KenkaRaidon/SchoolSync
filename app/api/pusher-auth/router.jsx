@@ -3,9 +3,7 @@ import { nanoid } from 'nanoid'
 
 export async function POST(req) {
   const data = await req.text()
-  const [socketId, channelName] = data
-    .split('&')
-    .map((str) => str.split('=')[1])
+  const [socketId, channelName] = data.split('&').map((str) => str.split('=')[1])
 
   const id = nanoid()
 
