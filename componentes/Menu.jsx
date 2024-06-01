@@ -22,6 +22,9 @@ const Menu = () => {
                   <Nav.Link href="/roles" className="btn navbtn">
                     <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Crear rol</span>
                   </Nav.Link>
+                  <Nav.Link href="/auth/register" className="btn navbtn">
+                    <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Crear usuario</span>
+                  </Nav.Link>
                 </>
               )}
             </Nav>

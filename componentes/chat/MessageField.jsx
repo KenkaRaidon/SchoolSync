@@ -1,25 +1,33 @@
 'use client'
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Form, Button, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
 
-import axios from 'axios'
+const MessageField = ({ roomId, correo }) => {
+    const { register, handleSubmit, reset } = useForm();
 
-const MessageField = ({ roomId }) => {
-    let input = ''
-
-    const sendMessage = async (text) => {
-        await axios.post('/api/message', { text, roomId })
-    }
+    const onSubmit = async (data) => {
+        await axios.post(`/api/message/create`, {
+            text: data.message,
+            roomId,
+            correo,
+        });
+        reset();
+    };
 
     return (
-        <div className='flex gap-2'>
-            type a new message:
-            <input
-                onChange={({ target }) => (input = target.value)}
-                className='border border-zinc-300'
-                type='text'
-            />
-            <button onClick={() => sendMessage(input || '')}>send</button>
-        </div>
-    )
-}
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <InputGroup>
+                <Form.Control
+                    type="text"
+                    placeholder="Escribe un mensaje..."
+                    {...register("message")}
+                />
+                <Button type="submit" variant="primary">Enviar</Button>
+            </InputGroup>
+        </Form>
+    );
+};
 
-export default MessageField
+export default MessageField;

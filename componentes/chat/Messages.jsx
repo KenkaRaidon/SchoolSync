@@ -1,34 +1,35 @@
 'use client'
-import { pusherClient } from '@/lib/pusher'
-import { useEffect, useState } from 'react'
+import { pusherClient } from '@/lib/pusher';
+import { useEffect, useState } from 'react';
 
 const Messages = ({ initialMessages, roomId }) => {
-    const [incomingMessages, setIncomingMessages] = useState([])
-    useEffect(() => {
-        pusherClient.subscribe(roomId)
+    const [incomingMessages, setIncomingMessages] = useState([]);
 
-        const messageHandler = (text) => {
-            setIncomingMessages((prev) => [...prev, text])
+    useEffect(() => {
+        pusherClient.subscribe(roomId);
+
+        const messageHandler = (message) => {
+            setIncomingMessages((prev) => [...prev, message]);
         };
 
-        pusherClient.bind('incoming-message', messageHandler)
+        pusherClient.bind('incoming-message', messageHandler);
 
         return () => {
             pusherClient.unbind('incoming-message', messageHandler);
             pusherClient.unsubscribe(roomId);
-        }
-    }, [])
+        };
+    }, [roomId]);
 
     return (
         <div>
             {initialMessages.map((message) => (
-                <p key={message.id}>{message.text}</p>
+                <p key={message.id}><strong>{message.userEmail}</strong>: {message.text}</p>
             ))}
-            {incomingMessages.map((text, i) => (
-                <p key={i}>{text}</p>
+            {incomingMessages.map((message, i) => (
+                <p key={`incoming-${i}`}><strong>{message.userEmail}</strong>: {message.text}</p>
             ))}
         </div>
-    )
-}
+    );
+};
 
-export default Messages
+export default Messages;
