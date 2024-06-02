@@ -1,4 +1,6 @@
-
+.ms-250 {
+	margin-left: 250px; /* Debe coincidir con el ancho del Header */
+  }
 
 .error-container {
     display: flex; /* Use flexbox for layout */

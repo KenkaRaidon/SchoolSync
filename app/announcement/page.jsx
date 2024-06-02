@@ -16,27 +16,29 @@ export default function Page() {
         mode: "onTouched",
         reValidateMode: "onSubmit",
         defaultValues: {
-            role: '',
+            title: '',
+            text: '',
+            image: '',
         }
     });
 
-    const registerRole = async (data) => {
+    const registerAnnouncement = async (data) => {
         setIsLoading(true);
-        const res = await fetch('/api/roles/create', {
+        const res = await fetch('/api/announcement/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ role: data.role })
+            body: JSON.stringify({ title: data.title, text: data.text, image: data.image, correo: session.user.email })
         });
         reset();
-        const role = JSON.parse(await res.text());
-        if (role.error) {
-            toast.warning(role.error);
+        const announcement = JSON.parse(await res.text());
+        if (announcement.error) {
+            toast.warning(announcement.error);
             setIsLoading(false)
             return;
         }
-        toast.success("Role created successfully")
+        toast.success("Announcement created successfully")
         setIsLoading(false);
     };
 
@@ -48,17 +50,29 @@ export default function Page() {
                     <Col md={6}>
                         <Card className="shadow-lg p-4">
                             <Card.Body>
-                                <h2 className="text-center mb-4">Crear rol</h2>
-                                <Form onSubmit={handleSubmit(registerRole)}>
-                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <h2 className="text-center mb-4">Anuncios</h2>
+                                <Form onSubmit={handleSubmit(registerAnnouncement)}>
+                                    <Form.Group className="mb-3" controlId="formBasicTitle">
                                         <Form.Control
                                             type="text"
-                                            placeholder="Ingresar nombre del rol"
-                                            {...register("role", { required: "Dato es obligatorio" })}
+                                            placeholder="Ingresar Titulo"
+                                            {...register("title", { required: "Dato es obligatorio" })}
                                         />
-                                        {errors.role && (
+                                        {errors.title && (
                                             <Form.Text className="text-danger">
-                                                {errors.role.message}
+                                                {errors.title.message}
+                                            </Form.Text>
+                                        )}
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formBasicText">
+                                        <Form.Control
+                                            as="textarea" rows={3}
+                                            placeholder="Ingresar anuncio"
+                                            {...register("text", { required: "Dato es obligatorio" })}
+                                        />
+                                        {errors.text && (
+                                            <Form.Text className="text-danger">
+                                                {errors.text.message}
                                             </Form.Text>
                                         )}
                                     </Form.Group>

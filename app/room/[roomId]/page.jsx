@@ -22,7 +22,7 @@ const Page = ({ params }) => {
         };
 
         fetchMessages();
-    }, [roomId]);
+    }, [roomId]); 
 
     return (
         <Container fluid className="d-flex flex-column vh-100">

@@ -11,7 +11,7 @@ export default function Page() {
     const { data: session } = useSession();
     const { setIsLoading } = useContext(LoadingContext);
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: "onTouched",
         reValidateMode: "onSubmit",
         defaultValues: {
@@ -33,6 +33,7 @@ export default function Page() {
             callbackUrl: `${window.location.origin}/`,
             redirect: false,
         });
+        reset();
 
         setIsLoading(false);
 

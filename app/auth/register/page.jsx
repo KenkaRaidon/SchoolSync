@@ -10,7 +10,7 @@ export default function Page() {
   const router = useRouter();
   const [roles, setRoles] = useState([]);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: "onTouched",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -37,6 +37,7 @@ export default function Page() {
       roleId: data.roleId
     };
     await axios.post('/api/auth/register', userData);
+    reset();
   };
 
   return (

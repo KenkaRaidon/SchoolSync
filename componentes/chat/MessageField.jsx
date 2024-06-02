@@ -1,8 +1,10 @@
 'use client'
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Form, Button, InputGroup } from 'react-bootstrap';
+import { Form, Button, InputGroup, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { FaArrowUp } from 'react-icons/fa';
+import './MessageField.css'; // Importar el archivo CSS
 
 const MessageField = ({ roomId, correo }) => {
     const { register, handleSubmit, reset } = useForm();
@@ -17,15 +19,19 @@ const MessageField = ({ roomId, correo }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className="message-field-form">
             <InputGroup>
                 <Form.Control
-                    type="text"
+                    as="textarea"
+                    rows={1}
                     placeholder="Escribe un mensaje..."
                     {...register("message")}
+                    className="message-input"
                 />
-                <Button type="submit" variant="primary">Enviar</Button>
             </InputGroup>
+            <Button type="submit" variant="primary" className="send-button">
+                <FaArrowUp />
+            </Button>
         </Form>
     );
 };

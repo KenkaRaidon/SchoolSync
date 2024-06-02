@@ -11,9 +11,9 @@ export default function RootLayout({ children }) {
       <Provider>
         <body>
           <LoadingProvider>
-            <div className="box">
-              <Header></Header>
-              <div className="container-fluid mt-4 flex-grow-1">
+            <div className="d-flex vh-100">
+              <Header className="flex-shrink-0 bg-light border-end position-fixed h-100"></Header>
+              <div className="container-fluid mt-4 flex-grow-1 ms-250">
                 <div className="row">
                   <div className="col-10 offset-1">
                     {children}
