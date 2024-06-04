@@ -3,14 +3,26 @@ import { ToastContainer, toast } from "react-toastify";
 import { LoadingContext } from "@/context/LoadingProvider";
 import { useSession } from "next-auth/react";
 import { redirect } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
 export default function Page() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const { setIsLoading } = useContext(LoadingContext);
+
+    useEffect(() => {
+        setIsLoading(true)
+        if (!["loading", "authenticated"].includes(status)) {
+          setIsLoading(false)
+          redirect('/auth/login');
+        }
+        if (status === "authenticated") {
+          setIsLoading(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [status]);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: "onTouched",

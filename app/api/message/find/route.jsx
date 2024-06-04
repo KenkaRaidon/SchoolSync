@@ -9,7 +9,7 @@ export async function GET(req, res) {
     const messages = await prisma.message.findMany({
         where: {
             chatRoomId: roomId,
-        },
+        }, 
         include: {
             user: {
                 select: {

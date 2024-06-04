@@ -27,9 +27,11 @@ export const authOptions = {
                 const user = await prisma.user.findUnique({
                     where: {
                         email: credentials.email
-                    }
+                    },
+                    include: {
+                        role: true, // Incluimos el rol del usuario
+                    },
                 });
-
                 if (!user) {
                     return null;
                 }
@@ -46,6 +48,27 @@ export const authOptions = {
     ],
     session: {
         strategy: "jwt"
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.role = user.role;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token.role) {
+                session.user.role = token.role.role;
+            }
+            return session;
+        },
+        async redirect({ url, baseUrl }) {
+            // Redirigir a la página de inicio después de sign out
+            if (url === '/api/auth/signout') {
+                return baseUrl;
+            }
+            return url.startsWith(baseUrl) ? url : baseUrl;
+        },
     },
     debug: process.env.NODE_ENV === "development",
 };

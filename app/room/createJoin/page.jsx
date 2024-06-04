@@ -28,7 +28,7 @@ const Page = () => {
     if (status === "authenticated") {
       setIsLoading(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const createRoom = async (data) => {
@@ -66,7 +66,7 @@ const Page = () => {
     });
     const textResponse = await res.text();
 
-    if (textResponse=="null") {
+    if (textResponse == "null") {
       toast.warning("No existe room con ese nombre.");
       setIsLoading(false)
       return;
@@ -80,7 +80,7 @@ const Page = () => {
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <Container className="my-5">
         <Row className="justify-content-center">
           <Col md={6}>
@@ -102,23 +102,27 @@ const Page = () => {
                     )}
                   </Form.Group>
                   <Row>
-                  <Col>
-                    <Button variant="primary"
-                      type="button"
-                      onClick={handleSubmit(({ roomName }) => createRoom(roomName))}
-                      className="w-100 mb-2">
-                      Create
-                    </Button>
-                  </Col>
-                  <Col>
-                    <Button variant="secondary"
-                      type="button"
-                      onClick={handleSubmit(({ roomName }) => joinRoom(roomName))}
-                      className="w-100">
-                      Join
-                    </Button>
-                  </Col>
-                </Row>
+                    {session?.user?.role == "Profesor" && (
+                      <>
+                        <Col>
+                          <Button variant="primary"
+                            type="button"
+                            onClick={handleSubmit(({ roomName }) => createRoom(roomName))}
+                            className="w-100 mb-2">
+                            Crear
+                          </Button>
+                        </Col>
+                      </>
+                    )}
+                    <Col>
+                      <Button variant="secondary"
+                        type="button"
+                        onClick={handleSubmit(({ roomName }) => joinRoom(roomName))}
+                        className="w-100">
+                        Unirse
+                      </Button>
+                    </Col>
+                  </Row>
                 </Form>
               </Card.Body>
             </Card>

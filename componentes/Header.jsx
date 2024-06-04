@@ -39,6 +39,7 @@ const Header = ({ className }) => {
             <Dropdown.Menu>
               <Dropdown.Item>
                 <Dropdown.ItemText>Bienvenido {session.user?.name}</Dropdown.ItemText>
+                <Dropdown.ItemText>{session.user?.role}</Dropdown.ItemText>
               </Dropdown.Item>
               <Dropdown.Item onClick={(e) => {
                 e.preventDefault();
@@ -49,7 +50,7 @@ const Header = ({ className }) => {
             </Dropdown.Menu>
           </Dropdown>
         ) : (
-          <Link className="btn green-btn" href="/auth/login">Sign In</Link>
+          <Link href="/auth/login">Sign In</Link>
         )}
       </div>
     </div>

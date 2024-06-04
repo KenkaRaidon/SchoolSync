@@ -6,19 +6,41 @@ import { FaHouse } from "react-icons/fa6";
 
 const Menu = () => {
   const { data: session } = useSession();
+  console.log(session)
   return (
     <Nav className="flex-column">
-      <Nav.Link href="/" className="btn navbtn mb-2">
-        <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Inicio</span>
+      <Nav.Link href="/" >
+        <FaHouse /> <span className='align-middle'>Inicio</span>
       </Nav.Link>
-      {session?.user && (
+      {session?.user?.role == "Administrador" && (
         <>
-          <Nav.Link href="/roles" className="btn navbtn mb-2">
-            <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Crear rol</span>
+          <Nav.Link href="/roles" >
+            <FaHouse /> <span className='align-middle'>Crear rol</span>
           </Nav.Link>
-          <Nav.Link href="/auth/register" className="btn navbtn mb-2">
-            <FaHouse color={'#006b40'} className="me-2" /> <span className='align-middle'>Crear usuario</span>
+          <Nav.Link href="/auth/register" >
+            <FaHouse /> <span className='align-middle'>Crear usuario</span>
           </Nav.Link>
+        </>
+      )}
+      {session?.user?.role == "Profesor" && (
+        <>
+          <Nav.Link href="/room/createJoin">
+            <FaHouse /> <span className='align-middle'>Room</span>
+          </Nav.Link>
+          <Nav.Link href="/announcement" >
+            <FaHouse /> <span className='align-middle'>Crear anuncios</span>
+          </Nav.Link>
+        </>
+      )}
+      {session?.user?.role == "Padre" && (
+        <>
+          <Nav.Link href="/room/createJoin">
+            <FaHouse /> <span className='align-middle'>Unirse a room</span>
+          </Nav.Link>
+        </>
+      )}
+      {session?.user?.role == "Alumno" && (
+        <>
         </>
       )}
     </Nav>

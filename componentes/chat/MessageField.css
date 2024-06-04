@@ -6,6 +6,8 @@
     padding: 10px;
 }
 
+.input-container{width: 92%; }
+
 .message-input {
     flex: 1;
     border-radius: 20px;

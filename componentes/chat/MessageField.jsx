@@ -20,18 +20,17 @@ const MessageField = ({ roomId, correo }) => {
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)} className="message-field-form">
-            <InputGroup>
+            <div className="input-container">
                 <Form.Control
                     as="textarea"
-                    rows={1}
                     placeholder="Escribe un mensaje..."
                     {...register("message")}
                     className="message-input"
                 />
-            </InputGroup>
-            <Button type="submit" variant="primary" className="send-button">
-                <FaArrowUp />
-            </Button>
+                <Button type="submit" variant="primary" className="send-button">
+                    <FaArrowUp />
+                </Button>
+            </div>
         </Form>
     );
 };
